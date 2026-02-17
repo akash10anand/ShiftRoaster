@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.6%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 217.2 91.2% 59.8%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 0 0% 100%;
+    --ring: 217.2 91.2% 59.8%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.6%;
+    --foreground: 0 0% 98.2%;
+    --card: 0 0% 8.5%;
+    --card-foreground: 0 0% 98.2%;
+    --popover: 0 0% 8.5%;
+    --popover-foreground: 0 0% 98.2%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 217.2 91.2% 59.8%;
+    --accent-foreground: 0 0% 8.5%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 0 0% 8.5%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 0 0% 8.5%;
+    --secondary: 0 0% 98.2%;
+    --secondary-foreground: 0 0% 8.5%;
+    --ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[hsl(var(--border))];
+  }
+  body {
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
