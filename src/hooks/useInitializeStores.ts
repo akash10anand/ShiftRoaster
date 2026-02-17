@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { usePersonStore } from "../stores/personStore";
 import { useRoleStore } from "../stores/roleStore";
 import { useGroupStore } from "../stores/groupStore";
@@ -12,6 +13,7 @@ import { useRosterStore } from "../stores/rosterStore";
  * Call this once in the App component
  */
 export function useInitializeStores() {
+  const { user, loading: authLoading } = useAuth();
   const fetchPeople = usePersonStore((state) => state.fetchPeople);
   const fetchRoles = useRoleStore((state) => state.fetchRoles);
   const fetchGroups = useGroupStore((state) => state.fetchGroups);
@@ -21,30 +23,34 @@ export function useInitializeStores() {
   const fetchRosters = useRosterStore((state) => state.fetchRosters);
 
   useEffect(() => {
-    // Fetch all data on app initialization
-    const initializeData = async () => {
-      try {
-        // Fetch roles first as they're referenced by other entities
-        await fetchRoles();
+    // Only fetch if user is authenticated and auth is done loading
+    if (!authLoading && user) {
+      const initializeData = async () => {
+        try {
+          // Fetch roles first as they're referenced by other entities
+          await fetchRoles();
 
-        // Then fetch people (references roles)
-        await fetchPeople();
+          // Then fetch people (references roles)
+          await fetchPeople();
 
-        // Then fetch the rest in parallel
-        await Promise.all([
-          fetchGroups(),
-          fetchShifts(),
-          fetchLeaves(),
-          fetchTemplates(),
-          fetchRosters(),
-        ]);
-      } catch (error) {
-        console.error("Error initializing stores:", error);
-      }
-    };
+          // Then fetch the rest in parallel
+          await Promise.all([
+            fetchGroups(),
+            fetchShifts(),
+            fetchLeaves(),
+            fetchTemplates(),
+            fetchRosters(),
+          ]);
+        } catch (error) {
+          console.error("Error initializing stores:", error);
+        }
+      };
 
-    initializeData();
+      initializeData();
+    }
   }, [
+    authLoading,
+    user,
     fetchPeople,
     fetchRoles,
     fetchGroups,
